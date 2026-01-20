@@ -1,0 +1,52 @@
+/.metadata/
+
+# =========================
+# Java / Spring
+# =========================
+*.class
+*.log
+
+# Maven
+target/
+!.mvn/wrapper/maven-wrapper.jar
+
+# Gradle (se usar)
+build/
+.gradle/
+
+# =========================
+# Eclipse / STS
+# =========================
+.project
+.classpath
+.settings/
+.metadata/
+.recommenders/
+bin/
+
+# =========================
+# IDEs adicionais
+# =========================
+.vscode/
+.idea/
+*.iml
+
+# =========================
+# SO
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# Spring Boot
+# =========================
+application.properties
+application.yml
+application-*.yml
+application-*.properties
+
+# =========================
+# Logs
+# =========================
+logs/
+*.log
