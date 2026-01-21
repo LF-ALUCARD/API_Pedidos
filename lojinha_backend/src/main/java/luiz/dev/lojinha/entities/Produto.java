@@ -9,12 +9,14 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "categoria")
-public class Categoria implements Serializable {
+@Table(name = "produto")
+public class Produto implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -22,16 +24,23 @@ public class Categoria implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
+	private Double price;
 
-	@ManyToMany(mappedBy = "categorias")
-	private List<Produto> produtos = new ArrayList<>();
+	@ManyToMany
+	@JoinTable(name = "produto_categoria",
+		joinColumns = @JoinColumn(name = "id_produto"),
+		inverseJoinColumns = @JoinColumn(name = "id_categoria")
+			)
+	private List<Categoria> categorias = new ArrayList<>();
 
-	public Categoria() {
+	public Produto() {
 	}
 
-	public Categoria(Long id, String name) {
+	public Produto(Long id, String name, Double price) {
+		super();
 		this.id = id;
 		this.name = name;
+		this.price = price;
 	}
 
 	public Long getId() {
@@ -50,12 +59,20 @@ public class Categoria implements Serializable {
 		this.name = name;
 	}
 
-	public List<Produto> getProdutos() {
-		return produtos;
+	public Double getPrice() {
+		return price;
 	}
 
-	public void setProdutos(List<Produto> produtos) {
-		this.produtos = produtos;
+	public void setPrice(Double price) {
+		this.price = price;
+	}
+
+	public List<Categoria> getCategorias() {
+		return categorias;
+	}
+
+	public void setCategorias(List<Categoria> categorias) {
+		this.categorias = categorias;
 	}
 
 	@Override
@@ -71,7 +88,7 @@ public class Categoria implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Categoria other = (Categoria) obj;
+		Produto other = (Produto) obj;
 		return Objects.equals(id, other.id);
 	}
 

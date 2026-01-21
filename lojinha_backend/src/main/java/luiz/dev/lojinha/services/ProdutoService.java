@@ -5,42 +5,42 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import luiz.dev.lojinha.entities.Categoria;
-import luiz.dev.lojinha.repositories.CategoriaRepository;
+import luiz.dev.lojinha.entities.Produto;
+import luiz.dev.lojinha.repositories.ProdutoRepository;
 import luiz.dev.lojinha.services.exceptions.BuscarException;
 import luiz.dev.lojinha.services.exceptions.InsertException;
 
 @Service
-public class CategoriaService {
+public class ProdutoService {
 
 	@Autowired
-	private CategoriaRepository	repositor;
+	private ProdutoRepository repositor;
 	
 	/*------------------------------------------------*/
-	public List<Categoria> findAll(){
+	public List<Produto> findAll(){
 		return repositor.findAll();
 	}
 	/*------------------------------------------------*/
-	public Categoria findById(Long id) {
+	public Produto findById(Long id) {
 		return repositor.findById(id).orElseThrow(() -> new BuscarException("Usuário não encontrado"));
 	}
 	/*------------------------------------------------*/
-	public Categoria insert(Categoria entitie) {
+	public Produto insert(Produto entitie) {
 		
 		if (repositor.existsByName(entitie.getName())) {
-			throw new InsertException("Categoria já cadastrada");
+			throw new InsertException("Produto já cadastrada");
 		}
 		
 		return repositor.save(entitie);
 	}
 	/*------------------------------------------------*/
-	public Categoria update(Long id, Categoria entitie) {
+	public Produto update(Long id, Produto entitie) {
 		
 		if (repositor.existsByName(entitie.getName())) {
-			throw new InsertException("Categoria já cadastrada");
+			throw new InsertException("Produto já cadastrada");
 		}
 		
-		Categoria cat = repositor.findById(id).orElseThrow(() -> new BuscarException("Usuário não encontrado"));
+		Produto cat = repositor.findById(id).orElseThrow(() -> new BuscarException("Usuário não encontrado"));
 		cat.setName(entitie.getName());
 		
 		return repositor.save(cat);
