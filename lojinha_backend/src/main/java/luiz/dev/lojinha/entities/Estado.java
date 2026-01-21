@@ -11,12 +11,12 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "categoria")
-public class Categoria implements Serializable {
+@Table(name = "estado")
+public class Estado implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -25,14 +25,15 @@ public class Categoria implements Serializable {
 	private Long id;
 	private String name;
 	
+	@OneToMany(mappedBy = "estado")
 	@JsonManagedReference
-	@ManyToMany(mappedBy = "categorias")
-	private List<Produto> produtos = new ArrayList<>();
+	private List<Cidade> cidades = new ArrayList<>();
 
-	public Categoria() {
+	public Estado() {
 	}
 
-	public Categoria(Long id, String name) {
+	public Estado(Long id, String name) {
+		super();
 		this.id = id;
 		this.name = name;
 	}
@@ -53,12 +54,12 @@ public class Categoria implements Serializable {
 		this.name = name;
 	}
 
-	public List<Produto> getProdutos() {
-		return produtos;
+	public List<Cidade> getCidades() {
+		return cidades;
 	}
 
-	public void setProdutos(List<Produto> produtos) {
-		this.produtos = produtos;
+	public void setCidades(List<Cidade> cidades) {
+		this.cidades = cidades;
 	}
 
 	@Override
@@ -74,7 +75,7 @@ public class Categoria implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Categoria other = (Categoria) obj;
+		Estado other = (Estado) obj;
 		return Objects.equals(id, other.id);
 	}
 

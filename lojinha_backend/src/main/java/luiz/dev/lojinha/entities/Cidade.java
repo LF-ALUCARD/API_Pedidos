@@ -1,22 +1,21 @@
 package luiz.dev.lojinha.entities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "categoria")
-public class Categoria implements Serializable {
+@Table(name = "cidade")
+public class Cidade implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -24,17 +23,21 @@ public class Categoria implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
-	
-	@JsonManagedReference
-	@ManyToMany(mappedBy = "categorias")
-	private List<Produto> produtos = new ArrayList<>();
 
-	public Categoria() {
+	@ManyToOne
+	@JoinColumn(name = "id_estado")
+	@JsonBackReference
+	private Estado estado;
+
+	public Cidade() {
+		super();
 	}
-
-	public Categoria(Long id, String name) {
+	
+	public Cidade(Long id, String name, Estado estado) {
+		super();
 		this.id = id;
 		this.name = name;
+		this.estado = estado;
 	}
 
 	public Long getId() {
@@ -53,12 +56,12 @@ public class Categoria implements Serializable {
 		this.name = name;
 	}
 
-	public List<Produto> getProdutos() {
-		return produtos;
+	public Estado getEstado() {
+		return estado;
 	}
 
-	public void setProdutos(List<Produto> produtos) {
-		this.produtos = produtos;
+	public void setEstado(Estado estado) {
+		this.estado = estado;
 	}
 
 	@Override
@@ -74,7 +77,7 @@ public class Categoria implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Categoria other = (Categoria) obj;
+		Cidade other = (Cidade) obj;
 		return Objects.equals(id, other.id);
 	}
 

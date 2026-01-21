@@ -5,42 +5,42 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import luiz.dev.lojinha.entities.Categoria;
-import luiz.dev.lojinha.repositories.CategoriaRepository;
+import luiz.dev.lojinha.entities.Cidade;
+import luiz.dev.lojinha.repositories.CidadeRepository;
 import luiz.dev.lojinha.services.exceptions.BuscarException;
 import luiz.dev.lojinha.services.exceptions.InsertException;
 
 @Service
-public class CategoriaService {
+public class CidadeService {
 
 	@Autowired
-	private CategoriaRepository	repositor;
+	private CidadeRepository repositor;
 	
 	/*------------------------------------------------*/
-	public List<Categoria> findAll(){
+	public List<Cidade> findAll(){
 		return repositor.findAll();
 	}
 	/*------------------------------------------------*/
-	public Categoria findById(Long id) {
-		return repositor.findById(id).orElseThrow(() -> new BuscarException("Categoria não encontrada"));
+	public Cidade findById(Long id) {
+		return repositor.findById(id).orElseThrow(() -> new BuscarException("Cidade não encontrado"));
 	}
 	/*------------------------------------------------*/
-	public Categoria insert(Categoria entitie) {
+	public Cidade insert(Cidade entitie) {
 		
 		if (repositor.existsByName(entitie.getName())) {
-			throw new InsertException("Categoria já cadastrada");
+			throw new InsertException("Cidade já cadastrada");
 		}
 		
 		return repositor.save(entitie);
 	}
 	/*------------------------------------------------*/
-	public Categoria update(Long id, Categoria entitie) {
+	public Cidade update(Long id, Cidade entitie) {
 		
 		if (repositor.existsByName(entitie.getName())) {
-			throw new InsertException("Categoria já cadastrada");
+			throw new InsertException("Cidade já cadastrada");
 		}
 		
-		Categoria cat = repositor.findById(id).orElseThrow(() -> new BuscarException("Categoria não encontrado"));
+		Cidade cat = repositor.findById(id).orElseThrow(() -> new BuscarException("Cidade não encontrado"));
 		cat.setName(entitie.getName());
 		
 		return repositor.save(cat);

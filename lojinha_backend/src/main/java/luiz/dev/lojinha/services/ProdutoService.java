@@ -22,7 +22,7 @@ public class ProdutoService {
 	}
 	/*------------------------------------------------*/
 	public Produto findById(Long id) {
-		return repositor.findById(id).orElseThrow(() -> new BuscarException("Usuário não encontrado"));
+		return repositor.findById(id).orElseThrow(() -> new BuscarException("Produto não encontrado"));
 	}
 	/*------------------------------------------------*/
 	public Produto insert(Produto entitie) {
@@ -40,7 +40,7 @@ public class ProdutoService {
 			throw new InsertException("Produto já cadastrada");
 		}
 		
-		Produto cat = repositor.findById(id).orElseThrow(() -> new BuscarException("Usuário não encontrado"));
+		Produto cat = repositor.findById(id).orElseThrow(() -> new BuscarException("Produto não encontrado"));
 		cat.setName(entitie.getName());
 		
 		return repositor.save(cat);
