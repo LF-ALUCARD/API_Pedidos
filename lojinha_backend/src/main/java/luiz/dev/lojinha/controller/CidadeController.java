@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import luiz.dev.lojinha.entities.Cidade;
+import luiz.dev.lojinha.entities.dto.CidadeCreateDTO;
 import luiz.dev.lojinha.services.CidadeService;
 
 @RestController
@@ -36,16 +37,16 @@ public class CidadeController {
 	}
 	
 	@PostMapping()
-	public ResponseEntity<Cidade> insert(@RequestBody Cidade entidade){
+	public ResponseEntity<Cidade> insert(@RequestBody CidadeCreateDTO entidade){
 		
 		Cidade info = service.insert(entidade);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(entidade.getId()).toUri();
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(info.getId()).toUri();
 		
 		return ResponseEntity.created(uri).body(info);
 	}
 	
 	@PutMapping("{id}")
-	public ResponseEntity<Cidade> update(@PathVariable Long id ,@RequestBody Cidade entidade){
+	public ResponseEntity<Cidade> update(@PathVariable Long id ,@RequestBody CidadeCreateDTO entidade){
 		return ResponseEntity.ok().body(service.update(id, entidade));
 	}
 	

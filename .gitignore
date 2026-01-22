@@ -38,14 +38,6 @@ bin/
 Thumbs.db
 
 # =========================
-# Spring Boot
-# =========================
-application.properties
-application.yml
-application-*.yml
-application-*.properties
-
-# =========================
 # Logs
 # =========================
 logs/

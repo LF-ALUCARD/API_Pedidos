@@ -6,7 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import luiz.dev.lojinha.entities.Cidade;
+import luiz.dev.lojinha.entities.Estado;
+import luiz.dev.lojinha.entities.dto.CidadeCreateDTO;
 import luiz.dev.lojinha.repositories.CidadeRepository;
+import luiz.dev.lojinha.repositories.EstadoRepository;
 import luiz.dev.lojinha.services.exceptions.BuscarException;
 import luiz.dev.lojinha.services.exceptions.InsertException;
 
@@ -15,6 +18,9 @@ public class CidadeService {
 
 	@Autowired
 	private CidadeRepository repositor;
+	
+	@Autowired
+	private EstadoRepository estadoRepositor;
 	
 	/*------------------------------------------------*/
 	public List<Cidade> findAll(){
@@ -25,16 +31,19 @@ public class CidadeService {
 		return repositor.findById(id).orElseThrow(() -> new BuscarException("Cidade não encontrado"));
 	}
 	/*------------------------------------------------*/
-	public Cidade insert(Cidade entitie) {
+	public Cidade insert(CidadeCreateDTO dto) {
 		
-		if (repositor.existsByName(entitie.getName())) {
+		if (repositor.existsByName(dto.getName())) {
 			throw new InsertException("Cidade já cadastrada");
 		}
+		
+		Estado estado = estadoRepositor.findById(dto.getId_estado()).orElseThrow(() -> new BuscarException("Estado não encontrado"));
+		Cidade entitie = new Cidade(null, dto.getName(), estado);
 		
 		return repositor.save(entitie);
 	}
 	/*------------------------------------------------*/
-	public Cidade update(Long id, Cidade entitie) {
+	public Cidade update(Long id, CidadeCreateDTO entitie) {
 		
 		if (repositor.existsByName(entitie.getName())) {
 			throw new InsertException("Cidade já cadastrada");
@@ -42,6 +51,7 @@ public class CidadeService {
 		
 		Cidade cat = repositor.findById(id).orElseThrow(() -> new BuscarException("Cidade não encontrado"));
 		cat.setName(entitie.getName());
+		cat.setEstado(estadoRepositor.findById(entitie.getId_estado()).orElseThrow(() -> new BuscarException("Estado não encontrado")));
 		
 		return repositor.save(cat);
 	}
