@@ -64,7 +64,6 @@ Certifique-se de ter instalado em sua máquina:
     git clone git@github.com:LF-ALUCARD/API_Pedidos.git
     cd cursomc
     ```
-    *(O nome do projeto original é `cursomc`)*
 
 2.  **Construa o projeto com Maven:**
     ```bash
