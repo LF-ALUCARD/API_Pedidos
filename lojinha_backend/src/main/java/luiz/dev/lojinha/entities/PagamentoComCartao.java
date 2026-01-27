@@ -8,22 +8,22 @@ import luiz.dev.lojinha.entities.enums.EstadoPagamento;
 @Table(name = "pagamento_cartao")
 public class PagamentoComCartao extends Pagamento {
 
-	private Integer numeroParcelas;
+	private Integer numeroParcela;
 
 	public PagamentoComCartao() {
 	}
 
-	public PagamentoComCartao(Long id, EstadoPagamento estado, Pedido pedido, Integer numeroParcelas) {
+	public PagamentoComCartao(Long id, EstadoPagamento estado, Pedido pedido, Integer numeroParcela) {
 		super(id, estado, pedido);
-		this.numeroParcelas = numeroParcelas;
+		this.numeroParcela = numeroParcela;
 	}
 
-	public Integer getNumeroParcelas() {
-		return numeroParcelas;
+	public Integer getNumeroParcela() {
+		return numeroParcela;
 	}
 
-	public void setNumeroParcelas(Integer numeroParcelas) {
-		this.numeroParcelas = numeroParcelas;
+	public void setNumeroParcelas(Integer numeroParcela) {
+		this.numeroParcela = numeroParcela;
 	}
 
 }

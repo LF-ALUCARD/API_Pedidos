@@ -6,7 +6,7 @@ public enum EstadoPagamento {
 
 	PEDENTE(1),
 	QUITADO(2),
-	CANCELADO(2);
+	CANCELADO(3);
 	
 	private Integer code;
 	

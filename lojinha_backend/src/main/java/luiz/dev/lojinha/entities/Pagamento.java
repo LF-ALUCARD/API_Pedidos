@@ -1,5 +1,7 @@
 package luiz.dev.lojinha.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
@@ -22,6 +24,7 @@ public class Pagamento {
 	@OneToOne
 	@JoinColumn(name = "id_pedido")
 	@MapsId
+	@JsonIgnore
 	private Pedido pedido;
 
 	public Pagamento() {
