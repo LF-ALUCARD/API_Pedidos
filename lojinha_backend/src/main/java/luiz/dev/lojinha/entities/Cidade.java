@@ -1,9 +1,12 @@
 package luiz.dev.lojinha.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -11,6 +14,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -26,13 +30,17 @@ public class Cidade implements Serializable {
 
 	@ManyToOne
 	@JoinColumn(name = "id_estado")
-	@JsonBackReference
+	@JsonManagedReference
 	private Estado estado;
+
+	@OneToMany(mappedBy = "cidade")
+	@JsonBackReference
+	List<Endereco> enderecos = new ArrayList<>();
 
 	public Cidade() {
 		super();
 	}
-	
+
 	public Cidade(Long id, String name, Estado estado) {
 		super();
 		this.id = id;
@@ -62,6 +70,10 @@ public class Cidade implements Serializable {
 
 	public void setEstado(Estado estado) {
 		this.estado = estado;
+	}
+
+	public List<Endereco> getEnderecos() {
+		return enderecos;
 	}
 
 	@Override

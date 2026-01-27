@@ -7,12 +7,17 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.CollectionTable;
+import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import luiz.dev.lojinha.entities.enums.TipoCliente;
@@ -28,25 +33,31 @@ public class Cliente implements Serializable {
 	private Long id;
 	private String name;
 	private String email;
-	private String cpfOuCnpj;
+	private String documento;
 	private Integer tipo;
-	
+
 	@OneToMany(mappedBy = "cliente")
+	@JsonBackReference
+	private List<Pedido> pedido = new ArrayList<>();
+
+	@OneToMany(mappedBy = "cliente")
+	@JsonManagedReference
 	List<Endereco> enderecos = new ArrayList<>();
-	
+
 	@ElementCollection
-	@CollectionTable(name = "numero")
-	Set<String> telefone = new HashSet<>();
+	@CollectionTable(name = "telefone", joinColumns = @JoinColumn(name = "id_cliente"))
+	@Column(name = "numero")
+	private Set<String> numero = new HashSet<>();
 
 	public Cliente() {
 	}
 
-	public Cliente(Long id, String name, String email, String cpfOuCnpj, TipoCliente tipo) {
+	public Cliente(Long id, String name, String email, String documento, TipoCliente tipo) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.email = email;
-		this.cpfOuCnpj = cpfOuCnpj;
+		this.documento = documento;
 		this.tipo = tipo.getCode();
 	}
 
@@ -74,12 +85,12 @@ public class Cliente implements Serializable {
 		this.email = email;
 	}
 
-	public String getCpfOuCnpj() {
-		return cpfOuCnpj;
+	public String getDocumento() {
+		return documento;
 	}
 
-	public void setCpfOuCnpj(String cpfOuCnpj) {
-		this.cpfOuCnpj = cpfOuCnpj;
+	public void setDocumento(String documento) {
+		this.documento = documento;
 	}
 
 	public TipoCliente getTipo() {
@@ -94,8 +105,12 @@ public class Cliente implements Serializable {
 		return enderecos;
 	}
 
-	public Set<String> getTelefones() {
-		return telefone;
+	public Set<String> getNumero() {
+		return numero;
+	}
+
+	public List<Pedido> getPedido() {
+		return pedido;
 	}
 
 	@Override

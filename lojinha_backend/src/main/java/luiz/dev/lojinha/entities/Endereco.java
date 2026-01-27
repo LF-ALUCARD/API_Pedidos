@@ -3,6 +3,9 @@ package luiz.dev.lojinha.entities;
 import java.io.Serializable;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -25,20 +28,22 @@ public class Endereco implements Serializable {
 	private String complemento;
 	private String bairro;
 	private String cep;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "id_cliente")
+	@JsonBackReference
 	private Cliente cliente;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "id_cidade")
+	@JsonManagedReference
 	private Cidade cidade;
 
 	public Endereco() {
 	}
 
 	public Endereco(Long id, String logradouro, String numero, String complemento, String bairro, String cep,
-			Cliente cliente) {
+			Cliente cliente, Cidade cidade) {
 		this.id = id;
 		this.logradouro = logradouro;
 		this.numero = numero;
@@ -46,6 +51,7 @@ public class Endereco implements Serializable {
 		this.bairro = bairro;
 		this.cep = cep;
 		this.cliente = cliente;
+		this.cidade = cidade;
 	}
 
 	public Long getId() {
@@ -102,6 +108,14 @@ public class Endereco implements Serializable {
 
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
+	}
+
+	public Cidade getCidade() {
+		return cidade;
+	}
+
+	public void setCidade(Cidade cidade) {
+		this.cidade = cidade;
 	}
 
 	@Override
